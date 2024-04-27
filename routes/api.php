@@ -18,7 +18,12 @@ use App\Http\Controllers\ProductController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware('token.Validator')->group(function(){
 
 Route::apiResource('/products', ProductController::class);
 Route::post('products/upload/local', [ProductController::class, 'uploadImageLocal']);
-Route::post('products/upload/public', [ProductController::class, 'uploadImagePublic']); 
+Route::post('products/upload/public', [ProductController::class, 'uploadImagePublic']);
+});
+
+
+ 
