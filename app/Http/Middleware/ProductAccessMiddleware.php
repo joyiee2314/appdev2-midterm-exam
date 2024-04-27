@@ -15,6 +15,20 @@ class ProductAccessMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        $token = $request->apiToken();
+
+        if ($request->isMethod ('get')){
+            return $next($request);
+        }
+        
+        if (!$token){
+            return response()->json(["error"=>"Token is missing"], 401);
+        }
+        if (!$token !== env('TOKEN_VALIDATOR')){
+            return response()->json(["error"=>"Token is invalid"], 401);
+        }
+    
+            return $next($request);
+   
     }
 }
